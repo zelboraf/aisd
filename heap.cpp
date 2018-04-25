@@ -6,24 +6,25 @@ private:
 	int array[8192];
 	int heap_size;
 
-	void heapify(int i) {
-		int t, s;
-		int left = i * 2;
-		int right = i * 2 + 1;
-		if (left <= heap_size && array[left] > array[i]) {
-			t = left;
+	void heapify(int current) {
+		int top, swap;
+		int left = current * 2;
+		int right = current * 2 + 1;
+
+		if (left <= heap_size && array[left] > array[current]) {
+			top = left;
 		}
 		else {
-			t = i;
+			top = current;
 		}
-		if (right <= heap_size && array[right] > array[t]) {
-			t = right;
+		if (right <= heap_size && array[right] > array[top]) {
+			top = right;
 		}
-		if (t != i) {
-			s = array[i];
-			array[i] = array[t];
-			array[t] = s;
-			heapify(t);
+		if (top != current) {
+			swap = array[current];
+			array[current] = array[top];
+			array[top] = swap;
+			heapify(top);
 		}
 	}
 
@@ -50,9 +51,7 @@ public:
 			cout << array[1] << '\n';
 			array[1] = array[heap_size];
 			heap_size--;
-			for (int i = heap_size / 2; i > 0; i--) {
-				heapify(i);
-			}
+			heapify(1);
 		}
 	}
 	// 'r'
